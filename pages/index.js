@@ -1,1 +1,1 @@
-export { default } from 'features/Search';
+export { default, getServerSideProps } from 'features/Search/pages/Search';

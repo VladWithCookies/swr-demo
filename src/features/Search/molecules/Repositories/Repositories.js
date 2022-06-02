@@ -1,9 +1,9 @@
 import { map } from 'lodash';
 import { Box, TableContainer, Table, Thead, Tbody, Tr, Th } from '@chakra-ui/react';
 
-import Repository from 'components/Repository';
+import Repository from 'features/Search/molecules/Repository';
 
-export default function Repositories({ repositories }) {
+export default function Repositories({ repositories, renderItem }) {
   return (
     <Box borderWidth="1px" borderRadius="6px" mt="4">
       <TableContainer>
@@ -17,7 +17,7 @@ export default function Repositories({ repositories }) {
             </Tr>
           </Thead>
           <Tbody>
-            {map(repositories, ({ id }) => <Repository key={id} />)}
+            {map(repositories, renderItem)}
           </Tbody>
         </Table>
       </TableContainer>

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Input, InputGroup, InputRightElement, Button } from '@chakra-ui/react';
 
 export default function SearchInput({ onSubmit }) {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState('kaifbreaker');
 
   const handleChange = (event) => setValue(event.target.value);
 
