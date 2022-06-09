@@ -1,23 +1,26 @@
 import numeral from 'numeral';
-import { truncate, set, findIndex } from 'lodash';
+import { truncate } from 'lodash';
 import { StarIcon } from '@chakra-ui/icons';
 import { Tr, Td, Button } from '@chakra-ui/react';
 
-import { SEARCH_REPOSITORIES_ENDPOINT, USER_STARRED_ENDPOINT } from 'constants/endpoints';
-import { PER_PAGE } from 'constants/pagination';
+import { USER_STARRED_ENDPOINT } from 'constants/endpoints';
 import { httpClient } from 'utils/api';
-import useQuery from 'hooks/useQuery';
 
-export default function Repository({ name, owner, description, stargazersCount, viewerHasStarred }) {
-  const { mutate } = useQuery(SEARCH_REPOSITORIES_ENDPOINT, { q: 'kaifbreaker', perPage: PER_PAGE });
-
+export default function Repository({
+  name,
+  owner,
+  description,
+  stargazersCount,
+  viewerHasStarred,
+  onToggleStar
+}) {
   const handleToggleStar = () => {
     httpClient({
       method: viewerHasStarred ? 'DELETE' : 'PUT',
       url: USER_STARRED_ENDPOINT(owner.login, name),
     });
 
-    mutate();
+    onToggleStar();
   };
 
   return (

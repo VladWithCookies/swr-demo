@@ -15,7 +15,7 @@ export default function Search({ fallback }) {
 }
 
 export async function getServerSideProps() {
-  const params = { q: 'kaifbreaker', perPage: PER_PAGE };
+  const params = { q: 'kaifbreaker', page: 1, perPage: PER_PAGE };
   const url = `${SEARCH_REPOSITORIES_ENDPOINT}?${toQueryString(params)}`;
   const data = await httpClient.get(url).then(({ data }) => data);
 

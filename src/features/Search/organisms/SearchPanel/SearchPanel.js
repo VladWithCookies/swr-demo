@@ -12,15 +12,15 @@ import Repository from 'features/Search/molecules/Repository';
 import Pagination from 'features/Search/molecules/Pagination';
 
 export default function Search() {
+  const [page, setPage] = useState(1);
   const [query, setQuery] = useState('kaifbreaker');
-  const { data, fetching } = useQuery(SEARCH_REPOSITORIES_ENDPOINT, { q: query, perPage: PER_PAGE });
+  const { data, fetching, mutate } = useQuery(SEARCH_REPOSITORIES_ENDPOINT, { q: query, page, perPage: PER_PAGE });
 
+  const total = data?.totalCount;
   const repositories = data?.items;
-  const hasNextPage = false;
-  const hasPreviousPage = false;
 
-  const handlePrev = () => null;
-  const handleNext = () => null;
+  const handlePrev = () => setPage((page) => page - 1);
+  const handleNext = () => setPage((page) => page + 1);
 
   return (
     <Container mt="20" maxW='container.lg'>
@@ -37,6 +37,7 @@ export default function Search() {
           renderItem={(repository) => (
             <Repository
               key={repository.id}
+              onToggleStar={mutate}
               {...repository}
             />
           )}
@@ -44,10 +45,10 @@ export default function Search() {
       )}
       {!isEmpty(repositories) && (
         <Pagination
+          page={page}
+          total={total}
           onPrev={handlePrev}
           onNext={handleNext}
-          hasNextPage={hasNextPage}
-          hasPreviousPage={hasPreviousPage}
         />
       )}
     </Container>
